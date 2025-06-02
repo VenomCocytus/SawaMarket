@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductService.Application.DTOs;
+namespace ProductService.Contract.DTOs;
 
 public record CreateProductDto(
     [Required]
@@ -20,7 +20,7 @@ public record CreateProductDto(
 
     [Required]
     [StringLength(50)]
-    string Category,
+    string CategoryId,
 
     [Url]
     string ThumbnailUrl,
