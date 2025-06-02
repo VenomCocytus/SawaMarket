@@ -2,11 +2,10 @@ using ProductService.Common.Helper;
 
 namespace ProductService.Contract.DTOs;
 
-public record ProductPagedRequest
-(
-    int PageNumber = 1,
-    int PageSize = 10,
-    string? SearchTerm = null,
-    string? CategoryId = null
-) : PagedRequest(PageNumber, PageSize)
-{ }
+public record ProductPagedRequest : PagedRequest
+{
+    public string? CategoryId = null;
+    public string? SearchTerm = null;
+    public decimal? MinPrice = null;
+    public decimal? MaxPrice = null;
+}
