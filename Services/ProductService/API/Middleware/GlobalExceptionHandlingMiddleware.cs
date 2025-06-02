@@ -31,8 +31,20 @@ public class GlobalExceptionHandlingMiddleware(
         var response = context.Response;
         response.ContentType = "application/json";
 
-        var errorResponse = exception switch
+        var errorResponse = CreateErrorResponse(context, exception);
+        response.StatusCode = errorResponse.StatusCode;
+        
+        await response.WriteAsync(JsonSerializer.Serialize(errorResponse, new JsonSerializerOptions()
         {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        }));
+    }
+    
+    private ErrorResponse CreateErrorResponse(HttpContext context, Exception exception)
+    {
+        return exception switch
+        {   
             ValidationException validationException => new ErrorResponse
             {
                 Success = false,
@@ -74,12 +86,5 @@ public class GlobalExceptionHandlingMiddleware(
                 TraceId = context.TraceIdentifier,
             }
         };
-        response.StatusCode = errorResponse.StatusCode;
-        
-        await response.WriteAsync(JsonSerializer.Serialize(errorResponse, new JsonSerializerOptions()
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
-        }));
     }
 }

@@ -1,5 +1,4 @@
 using AutoMapper;
-using ProductService.Application.DTOs;
 using ProductService.Contract.DTOs;
 using ProductService.Domain.Models;
 

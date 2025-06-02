@@ -1,14 +1,14 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace ProductService.Application.DTOs;
+namespace ProductService.Contract.DTOs;
 
 public record GetProductDto (
-    int Id,
+    Guid Id,
     string Name,
     string Description,
     decimal Price,
     int StockQuantity,
-    string Category,
+    string CategoryId,
     string ThumbnailUrl,
-    string ProductUrl
+    string ProductUrl,
+    string IsAvailable,
+    DateTime CreatedAt
     ){}

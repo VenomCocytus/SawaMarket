@@ -25,7 +25,7 @@ public partial class Product : BaseEntity
 
     [Required(ErrorMessage = "Category is required.")]
     [StringLength(50)]
-    public string Category { get; init; }
+    public string CategoryId { get; init; }
 
     [Url(ErrorMessage = "Thumbnail URL must be a valid URL.")]
     public string ThumbnailUrl { get; init; }
