@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using Microsoft.Extensions.Localization;
 using ProductService.Common.Exceptions;
-using ProductService.Common.Response;
+using ProductService.Common.Helper;
 using ValidationException = ProductService.Common.Exceptions.ValidationException;
 
 namespace ProductService.API.Middleware;

@@ -1,4 +1,4 @@
-namespace ProductService.Common.Response;
+namespace ProductService.Common.Helper;
 
 public class ErrorResponse
 {
