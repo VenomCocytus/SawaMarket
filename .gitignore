@@ -1,9 +1,67 @@
-.idea/
-.vs/
-*.user
-*.suo
-bin/
-obj/
+# Common files to ignore in a .NET project
+[Bb]in/
+[Oo]bj/
 /packages/
-riderModule.iml
 /_ReSharper.Caches/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Bb]in/
+[Oo]bj/
+[Ll]ogs/
+
+# NuGet packages
+**/packages/*
+!.nuget/packages/
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+
+# Rider
+.idea/
+.idea/*
+*.sln.iml
+riderModule.iml
+
+# Visual Studio Code
+.vscode/
+.history/
+*.code-workspace
+
+# Entity Framework
+*.db
+*.db-journal
+
+# Publish results
+publish/
+out/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# User-specific files
+*.DS_Store
+Thumbs.db
+*.pdb
+*.mdb
+*.pidb
+
+# Azure
+*.publishsettings
+
+# Other
+*.swp
+*.swo
