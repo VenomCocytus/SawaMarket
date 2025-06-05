@@ -1,6 +1,6 @@
 namespace ProductService.Contract.DTOs;
 
-public record ProductDto (
+public record ProductResponse (
     Guid Id,
     string Name,
     string Description,

@@ -15,7 +15,7 @@ public interface IBaseRepository<T> where T : BaseEntity
         List<Expression<Func<T, object>>>? includes = null,
         bool disableTracking = true);
     Task<T?> GetByIdAsync(string? id);
-    Task AddAsync(T entity);
+    Task<T> AddAsync(T entity);
     Task UpdateAsync(string id, T entity);
     Task DeleteAsync(string id);
 }

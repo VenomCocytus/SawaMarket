@@ -1,24 +1,33 @@
+using System.ComponentModel.DataAnnotations;
 using MediatR;
 using ProductService.Common.Helper;
 using ProductService.Contract.DTOs;
 
 namespace ProductService.Application.Features.Products.Commands;
 
-public record CreateProductCommand(CreateProductDto CreateProductDto) : 
-    IRequest<GenericResponse<ProductDto>>
-{
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, GenericResponse<ProductDto>>
-    {
-        private readonly IProductService _productService;
+public record CreateProductCommand(
+    [Required]
+    [StringLength(100, MinimumLength = 3)]
+    string Name,
 
-        public CreateProductCommandHandler(IProductService productService)
-        {
-            _productService = productService;
-        }
+    [StringLength(500)]
+    string Description,
 
-        public async Task<GenericResponse<ProductDto>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
-        {
-            return await _productService.CreateProductAsync(request.CreateProductDto);
-        }
-    }
-}
+    [Required]
+    [Range(0.01, 100000)]
+    decimal Price,
+
+    [Required]
+    [Range(0, int.MaxValue)]
+    int StockQuantity,
+
+    [Required]
+    [StringLength(50)]
+    string CategoryId,
+
+    [Url]
+    string ThumbnailUrl,
+
+    [Url]
+    string ProductUrl) : IRequest<GenericResponse<ProductResponse>>
+{}

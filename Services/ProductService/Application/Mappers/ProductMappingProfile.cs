@@ -1,4 +1,5 @@
 using AutoMapper;
+using ProductService.Application.Features.Products.Commands;
 using ProductService.Contract.DTOs;
 using ProductService.Domain.Models;
 
@@ -8,7 +9,7 @@ public class ProductMappingProfile : Profile
 {
     public ProductMappingProfile()
     {
-        CreateMap<Product, ProductDto>();
-        CreateMap<CreateProductDto, Product>();
+        CreateMap<Product, ProductResponse>();
+        CreateMap<CreateProductCommand, Product>();
     }
 }

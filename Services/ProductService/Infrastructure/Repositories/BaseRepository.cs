@@ -53,8 +53,11 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
         return await ProductDbCollection.Find(filter).FirstOrDefaultAsync();
     }
 
-    public async Task AddAsync(T entity) 
-        => await ProductDbCollection.InsertOneAsync(entity);
+    public async Task<T> AddAsync(T entity)
+    {
+        await ProductDbCollection.InsertOneAsync(entity);
+        return entity;
+    }
 
     public async Task UpdateAsync(string id, T entity)
     {

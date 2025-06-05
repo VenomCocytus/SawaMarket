@@ -8,6 +8,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddCommonServices();
 builder.Services.AddProductSpecificServices(builder.Configuration);
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies());
 
 var app = builder.Build();
 

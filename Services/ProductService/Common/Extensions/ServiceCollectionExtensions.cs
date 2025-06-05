@@ -39,9 +39,6 @@ public static class ServiceCollectionExtensions
         // Register repositories
         services.AddScoped<IProductRepository, ProductRepository>();
 
-        // Register business services
-        services.AddScoped<IProductService, ProductService>();
-
         return services;
     }
 }
