@@ -33,10 +33,6 @@
       <Folder Include="Application\Features\Products\Queries\" />
       <Folder Include="Application\Interfaces\" />
       <Folder Include="Application\Services\" />
-      <Folder Include="Contract\" />
-      <Folder Include="Domain\Context\" />
-      <Folder Include="Domain\Repositories\" />
-      <Folder Include="Infrastructure\" />
       <Folder Include="Tests\E2ETests\" />
       <Folder Include="Tests\IntegrationTests\" />
       <Folder Include="Tests\UnitTests\" />
