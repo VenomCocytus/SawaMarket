@@ -1,9 +1,7 @@
 using FluentValidation;
-using ProductService.Application.Features.Products.Commands;
 using ProductService.Common.Application.Validators;
-using ProductService.Contract.DTOs;
 
-namespace ProductService.Application.Validators;
+namespace ProductService.Application.Features.Products.Commands;
 
 public class CreateProductValidator : BaseValidator<CreateProductCommand>
 {

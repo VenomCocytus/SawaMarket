@@ -2,7 +2,7 @@ using AutoMapper;
 
 namespace ProductService.Application.Mappers;
 
-public class ProductMapper
+public static class ProductMapper
 {
     // To ensure that the mapper is only created once and reused
     private static readonly Lazy<IMapper> Lazy = new Lazy<IMapper>(() =>

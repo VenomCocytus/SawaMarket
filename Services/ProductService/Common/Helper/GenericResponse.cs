@@ -2,80 +2,97 @@ using Lombok.NET;
 
 namespace ProductService.Common.Helper;
 
-[NoArgsConstructor]
-[AllArgsConstructor]
-public partial class GenericResponse<T>
+/// <summary>
+/// Represents a generic response wrapper for API operations.
+/// </summary>
+/// <typeparam name="T">The type of the data returned in the response.</typeparam>
+public class GenericResponse<T>
 {
-    public bool IsSuccess { get; private set; }
-    public T? Data { get; private set; }
-    public string? Message { get; private set; }
-    public List<string> ValidationErrors { get; private set; } = [];
-    public string? ErrorCode { get; private set; }
-    public DateTimeOffset Timestamp { get; private set; }
-    
-    private static DateTimeOffset GetCurrentTimestamp() => DateTimeOffset.UtcNow;
+    public bool IsSuccess { get; init; }
+    public T? Data { get; init; }
+    public string? Message { get; init; }
+    public IReadOnlyList<string> ValidationErrors { get; init; } = [];
+    public string? ErrorCode { get; init; }
+    public DateTimeOffset Timestamp { get; init; } = DateTimeOffset.UtcNow;
 
+    
+    /// <summary>
+    /// Creates an empty failure response.
+    /// </summary>
     public static GenericResponse<T> Empty() => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = false,
         Message = string.Empty
     };
 
+    /// <summary>
+    /// Creates a success response with data and default message.
+    /// </summary>
     public static GenericResponse<T> Success(T data) => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = true,
         Message = "Operation.successfully",
         Data = data
     };
     
+    /// <summary>
+    /// Creates a success response with a custom message.
+    /// </summary>
     public static GenericResponse<T> Success(string successMessage) => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = true,
         Message = successMessage
     };
     
+    /// <summary>
+    /// Creates a success response with data and a custom message.
+    /// </summary>
     public static GenericResponse<T> Success(T data, string successMessage) => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = true,
         Message = successMessage,
         Data = data
     };
     
+    /// <summary>
+    /// Creates a failure response with an optional error code.
+    /// </summary>
     public static GenericResponse<T> Failure(string? errorCode = null) => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = false,
         Message = "Operation.Failure",
         ErrorCode = errorCode
     };
     
+    /// <summary>
+    /// Creates a failure response with a custom error message and optional error code.
+    /// </summary>
     public static GenericResponse<T> Failure(string errorMessage, 
         string? errorCode = null) => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = false,
         Message = errorMessage,
         ErrorCode = errorCode
     };
     
-    public static GenericResponse<T> ValidationFailure(List<string> validationErrors) => new()
+    /// <summary>
+    /// Creates a validation failure response with error details.
+    /// </summary>
+    public static GenericResponse<T> ValidationFailure(IEnumerable<string> validationErrors) => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = false,
-        ValidationErrors = validationErrors
+        ValidationErrors = validationErrors.ToArray()
     };
     
-    public static GenericResponse<T> ValidationFailure(List<string> validationErrors, 
+    /// <summary>
+    /// Creates a validation failure response with error details, custom message, and error code.
+    /// </summary>
+    public static GenericResponse<T> ValidationFailure(IEnumerable<string> validationErrors, 
         string errorMessage, string? errorCode) => new()
     {
-        Timestamp = GetCurrentTimestamp(),
         IsSuccess = false,
         Message = errorMessage,
         ErrorCode = errorCode,
-        ValidationErrors = validationErrors
+        ValidationErrors = validationErrors.ToArray()
     };
 }
