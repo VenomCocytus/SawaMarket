@@ -14,6 +14,7 @@ public interface IBaseRepository<T> where T : BaseEntity
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         List<Expression<Func<T, object>>>? includes = null,
         bool disableTracking = true);
+    Task<bool> ExistsByIdAsync(string id);
     Task<T?> GetByIdAsync(string? id);
     Task<T> AddAsync(T entity);
     Task UpdateAsync(string id, T entity);

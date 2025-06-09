@@ -6,4 +6,6 @@ public interface IProductRepository : IBaseRepository<Product>
 {
     Task<Product?> GetByNameAsync(string name);
     Task<IReadOnlyList<Product>> GetByCategoryAsync(string categoryId);
+    Task<bool> IsNameUniqueAsync(string? id, string name);
+    Task<bool> IsCategoryIdExisting(string categoryId);
 }

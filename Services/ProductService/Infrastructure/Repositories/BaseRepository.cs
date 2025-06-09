@@ -47,6 +47,12 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
         return await query.ToListAsync();
     }
 
+    public async Task<bool> ExistsByIdAsync(string id)
+    {
+        var filter = _filterBuilder.Eq(x => x.Id, id);
+        return await ProductDbCollection.Find(filter).AnyAsync();
+    }
+
     public async Task<T?> GetByIdAsync(string? id)
     {
         var filter = _filterBuilder.Eq(x => x.Id, id);
