@@ -14,7 +14,7 @@ public sealed class ProductRepository(ProductDbContext productDbContext, string 
         return await ProductDbCollection.Find(filter).FirstOrDefaultAsync();
     }
 
-    public async Task<IReadOnlyList<Product>> GetByCategoryAsync(string categoryId)
+    public async Task<IReadOnlyList<Product>> GetByCategoryIdAsync(string categoryId)
     {
         var filter = Builders<Product>.Filter.Eq(p => p.CategoryId, categoryId);
         return await ProductDbCollection.Find(filter).ToListAsync();
@@ -29,9 +29,15 @@ public sealed class ProductRepository(ProductDbContext productDbContext, string 
         return await ProductDbCollection.Find(filter).CountDocumentsAsync() == 0;
     }
 
-    public async Task<bool> IsCategoryIdExisting(string categoryId)
+    public async Task<bool> ExistsByCategoryId(string categoryId)
     {
         var filter = Builders<Product>.Filter.Eq(p => p.CategoryId, categoryId);
+        return await ProductDbCollection.Find(filter).AnyAsync();
+    }
+
+    public async Task<bool> ExistsByName(string name)
+    {
+        var filter = Builders<Product>.Filter.Eq(p => p.Name, name);
         return await ProductDbCollection.Find(filter).AnyAsync();
     }
 }

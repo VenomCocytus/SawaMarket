@@ -1,4 +1,4 @@
-namespace ProductService.Common.Helper;
+namespace ProductService.Common.Responses;
 
 public class ErrorDetail
 {

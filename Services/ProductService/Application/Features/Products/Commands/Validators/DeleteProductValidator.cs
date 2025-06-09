@@ -1,9 +1,9 @@
 using FluentValidation;
-using ProductService.Application.Features.Products.Commands;
-using ProductService.Application.Features.Products.Validators.Helper;
+using ProductService.Application.Features.Products.Commands.Requests;
 using ProductService.Common.Application.Validators;
+using ProductService.Common.Helper;
 
-namespace ProductService.Application.Features.Products.Validators;
+namespace ProductService.Application.Features.Products.Commands.Validators;
 
 public class DeleteProductValidator : BaseValidator<DeleteProductCommand>
 {

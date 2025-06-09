@@ -1,5 +1,6 @@
 using AutoMapper;
 using ProductService.Application.Features.Products.Commands;
+using ProductService.Application.Features.Products.Commands.Requests;
 using ProductService.Contract.DTOs;
 using ProductService.Domain.Models;
 

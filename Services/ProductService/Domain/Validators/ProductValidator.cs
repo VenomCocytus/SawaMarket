@@ -1,5 +1,5 @@
-using ProductService.Application.Features.Products.Validators.Helper;
 using ProductService.Common.Application.Validators;
+using ProductService.Common.Helper;
 using ProductService.Domain.Models;
 
 namespace ProductService.Domain.Validators;

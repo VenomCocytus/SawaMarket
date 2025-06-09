@@ -1,4 +1,4 @@
-namespace ProductService.Common.Helper;
+namespace ProductService.Common.Responses;
 
 public record PagedRequest(
     int PageNumber = 1,

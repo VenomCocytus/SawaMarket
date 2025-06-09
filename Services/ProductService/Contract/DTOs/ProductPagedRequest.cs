@@ -1,4 +1,4 @@
-using ProductService.Common.Helper;
+using ProductService.Common.Responses;
 
 namespace ProductService.Contract.DTOs;
 

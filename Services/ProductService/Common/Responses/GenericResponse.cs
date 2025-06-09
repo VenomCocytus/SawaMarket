@@ -1,6 +1,4 @@
-using Lombok.NET;
-
-namespace ProductService.Common.Helper;
+namespace ProductService.Common.Responses;
 
 /// <summary>
 /// Represents a generic response wrapper for API operations.

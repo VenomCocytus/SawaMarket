@@ -1,9 +1,9 @@
 using MediatR;
-using ProductService.Application.Features.Products.Commands;
-using ProductService.Common.Helper;
+using ProductService.Application.Features.Products.Commands.Requests;
+using ProductService.Common.Responses;
 using ProductService.Contract.Persistence;
 
-namespace ProductService.Application.Features.Products.Handlers;
+namespace ProductService.Application.Features.Products.Commands.Handlers;
 
 public class DeleteProductHandler(IProductRepository productRepository) 
     : IRequestHandler<DeleteProductCommand, GenericResponse<bool>>

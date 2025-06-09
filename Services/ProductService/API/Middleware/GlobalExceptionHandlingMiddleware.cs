@@ -4,7 +4,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Localization;
 using ProductService.Application.Constants;
 using ProductService.Common.Exceptions;
-using ProductService.Common.Helper;
+using ProductService.Common.Responses;
 using ValidationException = ProductService.Common.Exceptions.ValidationException;
 
 namespace ProductService.API.Middleware;

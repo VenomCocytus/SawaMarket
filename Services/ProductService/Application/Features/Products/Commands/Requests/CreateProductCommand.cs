@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
-using ProductService.Common.Helper;
+using ProductService.Common.Responses;
 using ProductService.Contract.DTOs;
 
-namespace ProductService.Application.Features.Products.Commands;
+namespace ProductService.Application.Features.Products.Commands.Requests;
 
 public record CreateProductCommand(
     [Required]

@@ -1,9 +1,9 @@
 using MediatR;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using ProductService.Common.Helper;
+using ProductService.Common.Responses;
 
-namespace ProductService.Application.Features.Products.Commands;
+namespace ProductService.Application.Features.Products.Commands.Requests;
 
 public record UpdateProductCommand(
     [property:BsonId]
