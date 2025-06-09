@@ -1,20 +1,18 @@
 using FluentValidation;
 using ProductService.Application.Features.Products.Commands;
 using ProductService.Common.Application.Validators;
-using ProductService.Infrastructure.Repositories;
 
 namespace ProductService.Application.Validators;
 
 public class CreateProductValidator : BaseValidator<CreateProductCommand>
 {
-    private readonly ProductRepository _productRepository;
-    public CreateProductValidator(ProductRepository productRepository)
+    public CreateProductValidator(ProductValidationHelper validationHelper)
     {
-        this._productRepository = productRepository;
         RuleFor(product => product.Name)
             .NotEmpty().WithMessage("Product.Name.Required")
             .Length(2, 100).WithMessage("Product.Name.Lenght")
-            .MustAsync(NameIsUnique).WithMessage("Product.Name.Duplicate");
+            .MustAsync(validationHelper.NameIsUnique)
+                .WithMessage("Product.Name.Duplicate");
 
         RuleFor(product => product.Description)
             .MaximumLength(500).WithMessage("Product.Description.MaxLength");
@@ -26,18 +24,7 @@ public class CreateProductValidator : BaseValidator<CreateProductCommand>
 
         RuleFor(product => product.CategoryId)
             .NotEmpty().WithMessage("Product.Category.Required")
-            .MustAsync(CategoryIdExists).WithMessage("Product.CategoryId.NotExists");
-    }
-    
-    private async Task<bool> NameIsUnique(string name, CancellationToken cancellationToken)
-    {
-        // Check if the product name is unique using the repository
-        return await _productRepository.IsNameUniqueAsync(null, name);
-    }
-
-    private async Task<bool> CategoryIdExists(string name, CancellationToken cancellationToken)
-    {
-        // Check if the category ID exists using the repository
-        return await _productRepository.IsCategoryIdExisting(name);
+            .MustAsync(validationHelper.CategoryIdExists)
+                .WithMessage("Product.CategoryId.NotExists");
     }
 }
