@@ -1,9 +1,9 @@
 using FluentValidation;
 using ProductService.Application.Features.Products.Commands;
+using ProductService.Application.Features.Products.Validators.Helper;
 using ProductService.Common.Application.Validators;
-using ProductService.Contract.Persistence;
 
-namespace ProductService.Application.Validators;
+namespace ProductService.Application.Features.Products.Validators;
 
 public class DeleteProductValidator : BaseValidator<DeleteProductCommand>
 {
@@ -11,7 +11,7 @@ public class DeleteProductValidator : BaseValidator<DeleteProductCommand>
     {
         RuleFor(product => product.Id)
             .NotEmpty().WithMessage("Product.Id.Required")
-            .MustAsync(productValidationHelper.ProductIdExists)
+            .MustAsync(productValidationHelper.BeExistingProductId)
                 .WithMessage("Product.Id.NotExists");
     }
 }

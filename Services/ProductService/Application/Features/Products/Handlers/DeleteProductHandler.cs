@@ -3,7 +3,7 @@ using ProductService.Application.Features.Products.Commands;
 using ProductService.Common.Helper;
 using ProductService.Contract.Persistence;
 
-namespace ProductService.Application.Handlers;
+namespace ProductService.Application.Features.Products.Handlers;
 
 public class DeleteProductHandler(IProductRepository productRepository) 
     : IRequestHandler<DeleteProductCommand, GenericResponse<bool>>

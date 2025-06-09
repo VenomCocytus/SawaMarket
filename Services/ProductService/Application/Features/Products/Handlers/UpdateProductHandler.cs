@@ -5,7 +5,7 @@ using ProductService.Common.Helper;
 using ProductService.Contract.Persistence;
 using ProductService.Domain.Models;
 
-namespace ProductService.Application.Handlers;
+namespace ProductService.Application.Features.Products.Handlers;
 
 public class UpdateProductHandler(IProductRepository productRepository) 
     : IRequestHandler<UpdateProductCommand, GenericResponse<bool>>

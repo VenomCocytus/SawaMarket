@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net.Mime;
 using System.Text.Json;
 using Microsoft.Extensions.Localization;
+using ProductService.Application.Constants;
 using ProductService.Common.Exceptions;
 using ProductService.Common.Helper;
 using ValidationException = ProductService.Common.Exceptions.ValidationException;
@@ -29,7 +31,7 @@ public class GlobalExceptionHandlingMiddleware(
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         var response = context.Response;
-        response.ContentType = "application/json";
+        response.ContentType = MediaTypeNames.Application.Json;
 
         var errorResponse = CreateErrorResponse(context, exception);
         response.StatusCode = errorResponse.StatusCode;
@@ -73,7 +75,7 @@ public class GlobalExceptionHandlingMiddleware(
                 Success = false,
                 StatusCode = StatusCodes.Status401Unauthorized,
                 Message = localizer["Error.Unauthorized"],
-                Code = "UNAUTHORIZED",
+                Code = ErrorCode.Unauthorized,
                 TraceId = context.TraceIdentifier,
             },
 
@@ -82,7 +84,7 @@ public class GlobalExceptionHandlingMiddleware(
                 Success = false,
                 StatusCode = StatusCodes.Status500InternalServerError,
                 Message = localizer["Error.InternalServerError"],
-                Code = "INTERNAL_SERVER_ERROR",
+                Code = ErrorCode.InternalServerError,
                 TraceId = context.TraceIdentifier,
             }
         };

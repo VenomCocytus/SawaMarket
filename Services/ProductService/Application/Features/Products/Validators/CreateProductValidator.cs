@@ -1,8 +1,9 @@
 using FluentValidation;
 using ProductService.Application.Features.Products.Commands;
+using ProductService.Application.Features.Products.Validators.Helper;
 using ProductService.Common.Application.Validators;
 
-namespace ProductService.Application.Validators;
+namespace ProductService.Application.Features.Products.Validators;
 
 public class CreateProductValidator : BaseValidator<CreateProductCommand>
 {
@@ -11,7 +12,7 @@ public class CreateProductValidator : BaseValidator<CreateProductCommand>
         RuleFor(product => product.Name)
             .NotEmpty().WithMessage("Product.Name.Required")
             .Length(2, 100).WithMessage("Product.Name.Lenght")
-            .MustAsync(validationHelper.NameIsUnique)
+            .MustAsync(validationHelper.BeUniqueName)
                 .WithMessage("Product.Name.Duplicate");
 
         RuleFor(product => product.Description)
@@ -24,7 +25,7 @@ public class CreateProductValidator : BaseValidator<CreateProductCommand>
 
         RuleFor(product => product.CategoryId)
             .NotEmpty().WithMessage("Product.Category.Required")
-            .MustAsync(validationHelper.CategoryIdExists)
+            .MustAsync(validationHelper.BeExistingCategoryId)
                 .WithMessage("Product.CategoryId.NotExists");
     }
 }

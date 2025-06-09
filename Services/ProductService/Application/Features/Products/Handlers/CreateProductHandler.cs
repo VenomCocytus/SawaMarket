@@ -6,7 +6,7 @@ using ProductService.Contract.DTOs;
 using ProductService.Contract.Persistence;
 using ProductService.Domain.Models;
 
-namespace ProductService.Application.Handlers;
+namespace ProductService.Application.Features.Products.Handlers;
 
 public class CreateProductHandler(IProductRepository productRepository)
     : IRequestHandler<CreateProductCommand, GenericResponse<ProductResponse>>

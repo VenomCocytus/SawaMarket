@@ -1,8 +1,9 @@
 using FluentValidation;
 using ProductService.Application.Features.Products.Commands;
+using ProductService.Application.Features.Products.Validators.Helper;
 using ProductService.Common.Application.Validators;
 
-namespace ProductService.Application.Validators;
+namespace ProductService.Application.Features.Products.Validators;
 
 public class UpdateProductValidator : BaseValidator<UpdateProductCommand>
 {
@@ -10,13 +11,13 @@ public class UpdateProductValidator : BaseValidator<UpdateProductCommand>
     {
         RuleFor(product => product.Id)
             .NotEmpty().WithMessage("Product.Id.Required")
-            .MustAsync(validationHelper.ProductIdExists)
+            .MustAsync(validationHelper.BeExistingProductId)
                 .WithMessage("Product.Id.NotExists");
 
         RuleFor(product => product.Name)
             .NotEmpty().WithMessage("Product.Name.Required")
             .Length(2, 100).WithMessage("Product.Name.Length")
-            .MustAsync(validationHelper.NameIsUnique).WithMessage("Product.Name.Duplicate");
+            .MustAsync(validationHelper.BeUniqueName).WithMessage("Product.Name.Duplicate");
 
         RuleFor(product => product.Description)
             .MaximumLength(500).WithMessage("Product.Description.MaxLength");
@@ -28,7 +29,7 @@ public class UpdateProductValidator : BaseValidator<UpdateProductCommand>
 
         RuleFor(product => product.CategoryId)
             .NotEmpty().WithMessage("Product.Category.Required")
-            .MustAsync(validationHelper.CategoryIdExists)
+            .MustAsync(validationHelper.BeExistingCategoryId)
                 .WithMessage("Product.CategoryId.NotExists");
     }
 }

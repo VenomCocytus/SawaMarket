@@ -8,7 +8,7 @@ using ProductService.Infrastructure.Repositories;
 
 namespace ProductService.Common.Extensions;
 
-public static class ServiceCollectionExtensions
+public static class CommonExtensions
 {
     public static IServiceCollection AddCommonServices(this IServiceCollection services)
     {

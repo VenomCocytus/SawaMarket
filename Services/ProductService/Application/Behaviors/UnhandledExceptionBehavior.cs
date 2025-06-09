@@ -17,13 +17,8 @@ public class UnhandledExceptionBehavior<TRequest, TResponse>(ILogger<TRequest> l
         catch (Exception exception)
         {
             var requestName = typeof(TRequest).Name;
-            _logger.LogError(exception, $"Application Request: Unhandled Exception for Request {requestName} {request}");
+            _logger.LogError(exception, "Application Request: Unhandled Exception for Request {RequestName} {Request}", requestName, request);
             throw;
         }
-    }
-
-    public Task Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
-    {
-        throw new NotImplementedException();
     }
 }
