@@ -1,7 +1,8 @@
 using FluentValidation;
+using ProductService.Application.Features.Products.Commands;
 using ProductService.Common.Application.Validators;
 
-namespace ProductService.Application.Features.Products.Commands;
+namespace ProductService.Application.Validators;
 
 public class CreateProductValidator : BaseValidator<CreateProductCommand>
 {

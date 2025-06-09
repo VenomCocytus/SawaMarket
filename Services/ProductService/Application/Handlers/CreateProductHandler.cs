@@ -1,11 +1,12 @@
 using MediatR;
+using ProductService.Application.Features.Products.Commands;
 using ProductService.Application.Mappers;
 using ProductService.Common.Helper;
 using ProductService.Contract.DTOs;
 using ProductService.Contract.Persistence;
 using ProductService.Domain.Models;
 
-namespace ProductService.Application.Features.Products.Commands;
+namespace ProductService.Application.Handlers;
 
 public class CreateProductHandler(IProductRepository productRepository)
     : IRequestHandler<CreateProductCommand, GenericResponse<ProductResponse>>
