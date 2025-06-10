@@ -1,4 +1,4 @@
-namespace ProductService.Common.Exceptions;
+namespace ProductService.Application.Exceptions;
 
 public abstract class BaseException(string message, string errorCode, Exception? innerException = null)
     : Exception(message, innerException)

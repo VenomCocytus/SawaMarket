@@ -1,6 +1,6 @@
-using ProductService.Common.Application.Interfaces;
+using ProductService.Application.Interfaces;
 
-namespace ProductService.Common.Application.Services;
+namespace ProductService.Application.Services;
 
 public class DateTimeProvider : IDateTimeProvider
 {

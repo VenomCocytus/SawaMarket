@@ -1,7 +1,7 @@
 using FluentValidation;
 using ProductService.Application.Features.Products.Commands.Requests;
-using ProductService.Common.Application.Validators;
-using ProductService.Common.Helper;
+using ProductService.Application.Helper;
+using ProductService.Domain.Validators;
 
 namespace ProductService.Application.Features.Products.Commands.Validators;
 

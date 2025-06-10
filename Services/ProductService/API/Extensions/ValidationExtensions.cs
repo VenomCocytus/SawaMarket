@@ -3,7 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ProductService.API.Middleware;
 
-namespace ProductService.Common.Extensions;
+namespace ProductService.API.Extensions;
 
 public static class ValidationExtensions
 {

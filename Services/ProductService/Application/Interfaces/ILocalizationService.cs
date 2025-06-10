@@ -1,4 +1,4 @@
-namespace ProductService.Common.Application.Interfaces;
+namespace ProductService.Application.Interfaces;
 
 public interface ILocalizationService
 {

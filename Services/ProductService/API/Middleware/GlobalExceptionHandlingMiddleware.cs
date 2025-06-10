@@ -3,9 +3,9 @@ using System.Net.Mime;
 using System.Text.Json;
 using Microsoft.Extensions.Localization;
 using ProductService.Application.Constants;
-using ProductService.Common.Exceptions;
-using ProductService.Common.Responses;
-using ValidationException = ProductService.Common.Exceptions.ValidationException;
+using ProductService.Application.Exceptions;
+using ProductService.Contract.Common;
+using ValidationException = ProductService.Application.Exceptions.ValidationException;
 
 namespace ProductService.API.Middleware;
 

@@ -1,6 +1,6 @@
 using MediatR;
 using ProductService.Application.Features.Products.Commands.Requests;
-using ProductService.Common.Responses;
+using ProductService.Contract.Common;
 using ProductService.Contract.Persistence;
 
 namespace ProductService.Application.Features.Products.Commands.Handlers;

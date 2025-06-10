@@ -1,18 +1,17 @@
 using System.Globalization;
-using System.Reflection;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Localization;
-using ProductService.Common.Application.Interfaces;
+using ProductService.Application.Interfaces;
 
-namespace ProductService.Common.Application.Services;
+namespace ProductService.Application.Services;
 
-public class LocalizationService() : ILocalizationService
+public class LocalizationService(IStringLocalizer localizer) : ILocalizationService
 {
     private readonly CultureInfo? _currentCultureInfo;
-    private readonly IStringLocalizer _localizer;
+    private readonly IStringLocalizer _localizer = localizer;
     
     public LocalizationService(IStringLocalizerFactory factory, 
-        IHttpContextAccessor httpContextAccessor) : this()
+        IHttpContextAccessor httpContextAccessor, IStringLocalizer localizer) : this(localizer)
     {
         _localizer = factory.Create("SharedResources",
             typeof(LocalizationService).Assembly.GetName().Name!);

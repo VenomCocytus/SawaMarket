@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using ProductService.Common.Models;
+using BaseEntity = ProductService.Domain.Models.BaseEntity;
 
 namespace ProductService.Contract.Persistence;
 

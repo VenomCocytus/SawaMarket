@@ -1,5 +1,4 @@
 using Lombok.NET;
-using ProductService.Common.Models;
 
 namespace ProductService.Domain.Models;
 

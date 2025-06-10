@@ -1,7 +1,7 @@
 using FluentValidation;
 using FluentValidation.Resources;
 
-namespace ProductService.Common.Application.Validators;
+namespace ProductService.Domain.Validators;
 
 public abstract class BaseValidator<T> : AbstractValidator<T>
 {

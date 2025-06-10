@@ -1,4 +1,4 @@
-namespace ProductService.Common.Exceptions;
+namespace ProductService.Contract.Common;
 
 public record ValidationError(
     string ErrorCode,

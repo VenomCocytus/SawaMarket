@@ -2,7 +2,7 @@ using Lombok.NET;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace ProductService.Common.Models;
+namespace ProductService.Domain.Models;
 
 [NoArgsConstructor]
 [AllArgsConstructor]

@@ -1,6 +1,7 @@
 using FluentValidation;
 using MediatR;
-using ProductService.Common.Exceptions;
+using ProductService.Application.Exceptions;
+using ProductService.Contract.Common;
 using ValidationException = FluentValidation.ValidationException;
 
 namespace ProductService.Application.Behaviors;

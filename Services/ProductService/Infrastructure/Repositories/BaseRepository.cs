@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
-using ProductService.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using ProductService.Contract.Persistence;
 using ProductService.Infrastructure.Context;
+using BaseEntity = ProductService.Domain.Models.BaseEntity;
 
 namespace ProductService.Infrastructure.Repositories;
 

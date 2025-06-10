@@ -1,4 +1,4 @@
-using ProductService.Common.Extensions;
+using ProductService.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

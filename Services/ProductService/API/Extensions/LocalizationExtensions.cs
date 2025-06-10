@@ -1,9 +1,9 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
-using ProductService.Common.Application.Interfaces;
-using ProductService.Common.Application.Services;
+using ProductService.Application.Interfaces;
+using ProductService.Application.Services;
 
-namespace ProductService.Common.Extensions;
+namespace ProductService.API.Extensions;
 
 public static class LocalizationExtensions
 {

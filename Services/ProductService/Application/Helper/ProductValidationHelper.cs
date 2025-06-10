@@ -1,7 +1,7 @@
 using ProductService.Application.Features.Products.Queries.Requests;
 using ProductService.Contract.Persistence;
 
-namespace ProductService.Common.Helper;
+namespace ProductService.Application.Helper;
 
 public abstract class ProductValidationHelper(IProductRepository productRepository)
 {

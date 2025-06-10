@@ -1,4 +1,4 @@
-namespace ProductService.Common.Responses;
+namespace ProductService.Contract.Common;
 
 /// <summary>
 /// Represents a generic response wrapper for API operations.

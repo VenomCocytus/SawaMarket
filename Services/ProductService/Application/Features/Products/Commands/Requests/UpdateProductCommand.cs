@@ -1,7 +1,7 @@
 using MediatR;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using ProductService.Common.Responses;
+using ProductService.Contract.Common;
 
 namespace ProductService.Application.Features.Products.Commands.Requests;
 

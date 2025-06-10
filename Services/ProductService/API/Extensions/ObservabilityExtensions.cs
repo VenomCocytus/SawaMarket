@@ -1,8 +1,4 @@
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Serilog;
-using Serilog.Sinks.Elasticsearch;
-
-namespace ProductService.Common.Extensions;
+namespace ProductService.API.Extensions;
 
 public static class ObservabilityExtensions
 {

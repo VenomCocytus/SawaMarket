@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using ProductService.Application.Constants;
-using ProductService.Common.Exceptions;
+using ProductService.Application.Exceptions;
+using ProductService.Contract.Common;
 using ValidationException = FluentValidation.ValidationException;
 
 namespace ProductService.API.Middleware;
@@ -57,7 +58,7 @@ public class ValidationMiddleware : IAsyncActionFilter
                 .ToList();
 
             if (validationErrorList.Count != 0)
-                throw new Common.Exceptions.ValidationException(validationErrorList);
+                throw new Application.Exceptions.ValidationException(validationErrorList);
         }
 
         await next();

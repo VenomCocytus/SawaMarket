@@ -1,4 +1,4 @@
-namespace ProductService.Common.Responses;
+namespace ProductService.Contract.Common;
 
 public record PagedResponse<T>(
     int PageNumber,

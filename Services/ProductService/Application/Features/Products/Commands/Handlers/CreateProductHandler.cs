@@ -1,7 +1,7 @@
 using MediatR;
 using ProductService.Application.Features.Products.Commands.Requests;
 using ProductService.Application.Mappers;
-using ProductService.Common.Responses;
+using ProductService.Contract.Common;
 using ProductService.Contract.DTOs;
 using ProductService.Contract.Persistence;
 using ProductService.Domain.Models;

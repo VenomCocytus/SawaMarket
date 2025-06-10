@@ -1,12 +1,12 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
-using ProductService.Common.Application.Interfaces;
+using ProductService.Application.Interfaces;
 using ProductService.Contract.Persistence;
 using ProductService.Infrastructure.Context;
 using ProductService.Infrastructure.Repositories;
 
-namespace ProductService.Common.Extensions;
+namespace ProductService.API.Extensions;
 
 public static class CommonExtensions
 {

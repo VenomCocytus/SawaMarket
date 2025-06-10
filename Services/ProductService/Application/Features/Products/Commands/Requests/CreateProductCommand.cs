@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
-using ProductService.Common.Responses;
+using ProductService.Contract.Common;
 using ProductService.Contract.DTOs;
 
 namespace ProductService.Application.Features.Products.Commands.Requests;
