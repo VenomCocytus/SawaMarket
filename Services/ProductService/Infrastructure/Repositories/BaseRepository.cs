@@ -13,28 +13,26 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
 {
     protected readonly IMongoCollection<T> ProductDbCollection = productDbContext.GetCollection<T>(collectionName) ?? 
                                                                 throw new ArgumentNullException(nameof(productDbContext));
-    private readonly FilterDefinitionBuilder<T> _filterBuilder = Builders<T>.Filter;
+    protected readonly FilterDefinitionBuilder<T> FilterBuilder = Builders<T>.Filter;
+    protected readonly SortDefinitionBuilder<T> SortBuilder = Builders<T>.Sort;
 
     public async Task<IReadOnlyList<T>> GetAllAsync() 
-        => await ProductDbCollection.Find(_filterBuilder.Empty).ToListAsync();
+        => await ProductDbCollection.Find(FilterBuilder.Empty).ToListAsync();
 
-    public async Task<PagedResponse<T>> GetPagedAsync(PagedRequest pagedRequest, Expression<Func<T, bool>>? predicate = null, 
-        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, List<Expression<Func<T, object>>>? includes = null, 
-        bool disableTracking = true)
+    public async Task<PagedResponse<T>> GetPagedAsync(PagedRequest pagedRequest, FilterDefinition<T>? filterBuilder = null, 
+        SortDefinition<T>? sortBuilder = null)
     {
-        var totalDocuments = await ProductDbCollection.CountDocumentsAsync(_filterBuilder.Empty);
-        var totalPages = (int) Math.Ceiling(totalDocuments / (double) pagedRequest.PageSize);
+        filterBuilder ??= FilterBuilder.Empty;
+        sortBuilder ??= SortBuilder.Ascending(x => x.Id);
         
-        var query = ProductDbCollection.AsQueryable();
-        if (disableTracking) query = query.AsNoTracking();
-        if (includes != null) 
-            query = includes.Aggregate(query, (current, include) => current.Include(include));
-        if(predicate != null) query = query.Where(predicate);
-        if (orderBy != null) orderBy(query);
+        var totalDocuments = await ProductDbCollection.CountDocumentsAsync(filterBuilder);
+        var totalPages = (int) Math.Ceiling(totalDocuments / (double) pagedRequest.PageSize);
 
-        var items = query
+        var items = ProductDbCollection
+            .Find(filterBuilder)
+            .Sort(sortBuilder)
             .Skip(pagedRequest.PageSize * (pagedRequest.PageNumber - 1))
-            .Take(pagedRequest.PageSize)
+            .Limit(pagedRequest.PageSize)
             .ToListAsync();
         
         return new PagedResponse<T>(
@@ -46,47 +44,24 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
             );
     }
 
-    public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
+    public async Task<IReadOnlyList<T>> GetAsync(FilterDefinition<T>? filterBuilder = null,
+        SortDefinition<T>? sortBuilder = null)
     {
-        var filter = _filterBuilder.Where(predicate);
-        return await ProductDbCollection.Find(filter).FirstOrDefaultAsync();
-    }
-
-    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null, 
-        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string? includeString = null,
-        bool disableTracking = true)
-    {
-        var query = ProductDbCollection.AsQueryable();
-        if (disableTracking) query = query.AsNoTracking();
-        if(!string.IsNullOrEmpty(includeString)) query = query.Include(includeString);
-        if(predicate != null) query = query.Where(predicate);
-        if (orderBy != null) return await orderBy(query).ToListAsync();
+        filterBuilder ??= FilterBuilder.Empty;
+        sortBuilder ??= SortBuilder.Ascending(x => x.Id);
         
-        return await query.ToListAsync();
-    }
-
-    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null, 
-        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, List<Expression<Func<T, object>>>? includes = null, bool disableTracking = true)
-    {
-        var query = ProductDbCollection.AsQueryable();
-        if(disableTracking) query = query.AsNoTracking();
-        if(includes != null) query = includes.Aggregate(query, (current, include) => 
-            current.Include(include));
-        if(predicate != null) query = query.Where(predicate);
-        if(orderBy != null) return await orderBy(query).ToListAsync();
-        
-        return await query.ToListAsync();
+        return await ProductDbCollection.Find(filterBuilder).Sort(sortBuilder).ToListAsync();
     }
 
     public async Task<bool> ExistsByIdAsync(string id)
     {
-        var filter = _filterBuilder.Eq(x => x.Id, id);
+        var filter = FilterBuilder.Eq(x => x.Id, id);
         return await ProductDbCollection.Find(filter).AnyAsync();
     }
 
     public async Task<T?> GetByIdAsync(string? id)
     {
-        var filter = _filterBuilder.Eq(x => x.Id, id);
+        var filter = FilterBuilder.Eq(x => x.Id, id);
         return await ProductDbCollection.Find(filter).FirstOrDefaultAsync();
     }
 
@@ -100,7 +75,7 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
     {
         ArgumentNullException.ThrowIfNull(entity);
 
-        var filter = _filterBuilder.Eq(x => x.Id, id);
+        var filter = FilterBuilder.Eq(x => x.Id, id);
         await ProductDbCollection.ReplaceOneAsync(filter, entity);
     }
 
@@ -108,7 +83,7 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
     {
         ArgumentNullException.ThrowIfNull(id);
         
-        var filter = _filterBuilder.Eq(x => x.Id, id);
+        var filter = FilterBuilder.Eq(x => x.Id, id);
         await ProductDbCollection.DeleteOneAsync(filter);
     }
 }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using ProductService.Application.Features.Products.Commands;
 using ProductService.Application.Features.Products.Commands.Requests;
+using ProductService.Contract.Common;
 using ProductService.Contract.DTOs;
 using ProductService.Domain.Models;
 
@@ -12,5 +13,6 @@ public class ProductMappingProfile : Profile
     {
         CreateMap<Product, ProductResponse>();
         CreateMap<CreateProductCommand, Product>();
+        CreateMap<PagedResponse<Product>, PagedResponse<ProductResponse>>();
     }
 }

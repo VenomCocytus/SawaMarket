@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using ProductService.Contract.Common;
+using ProductService.Contract.DTOs;
 using ProductService.Contract.Persistence;
 using ProductService.Domain.Models;
 using ProductService.Infrastructure.Context;
@@ -39,5 +42,33 @@ public sealed class ProductRepository(ProductDbContext productDbContext, string 
     {
         var filter = Builders<Product>.Filter.Eq(p => p.Name, name);
         return await ProductDbCollection.Find(filter).AnyAsync();
+    }
+
+    public async Task<PagedResponse<Product>> GetPagedProductsAsync(ProductPagedRequest pagedRequest)
+    {
+        var filterBuilder = FilterBuilder.Empty;
+
+        if (!string.IsNullOrWhiteSpace(pagedRequest.CategoryId))
+            filterBuilder &= FilterBuilder.Eq(p => p.CategoryId, pagedRequest.CategoryId);
+
+        if (!string.IsNullOrWhiteSpace(pagedRequest.SearchTerm))
+            filterBuilder &= FilterBuilder.Or(
+                FilterBuilder.Regex(p => p.Name, new MongoDB.Bson.BsonRegularExpression(pagedRequest.SearchTerm, "i")),
+                FilterBuilder.Regex(p => p.Description, new MongoDB.Bson.BsonRegularExpression(pagedRequest.SearchTerm, "i"))
+            );
+        
+        if(!string.IsNullOrWhiteSpace(pagedRequest.MinPrice.ToString()))
+            filterBuilder &= FilterBuilder.Gte(p => p.Price, pagedRequest.MinPrice);
+        if(!string.IsNullOrWhiteSpace(pagedRequest.MaxPrice.ToString()))
+            filterBuilder &= FilterBuilder.Lte(p => p.Price, pagedRequest.MaxPrice);
+        
+        var sortBuilder = pagedRequest.SortBy switch
+        {
+            "price" => SortBuilder.Ascending(p => p.Price),
+            "createdAt" => SortBuilder.Ascending(p => p.CreatedAt),
+            _ => SortBuilder.Ascending(p => p.Name)
+        };
+
+        return await GetPagedAsync(pagedRequest, filterBuilder, sortBuilder);
     }
 }
