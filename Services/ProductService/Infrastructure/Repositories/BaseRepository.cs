@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using ProductService.Contract.Common;
 using ProductService.Contract.Persistence;
 using ProductService.Infrastructure.Context;
-using BaseEntity = ProductService.Domain.Models.BaseEntity;
+using BaseEntity = ProductService.Domain.Common.BaseEntity;
 
 namespace ProductService.Infrastructure.Repositories;
 
@@ -17,16 +18,45 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
     public async Task<IReadOnlyList<T>> GetAllAsync() 
         => await ProductDbCollection.Find(_filterBuilder.Empty).ToListAsync();
 
+    public async Task<PagedResponse<T>> GetPagedAsync(PagedRequest pagedRequest, Expression<Func<T, bool>>? predicate = null, 
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, List<Expression<Func<T, object>>>? includes = null, 
+        bool disableTracking = true)
+    {
+        var totalDocuments = await ProductDbCollection.CountDocumentsAsync(_filterBuilder.Empty);
+        var totalPages = (int) Math.Ceiling(totalDocuments / (double) pagedRequest.PageSize);
+        
+        var query = ProductDbCollection.AsQueryable();
+        if (disableTracking) query = query.AsNoTracking();
+        if (includes != null) 
+            query = includes.Aggregate(query, (current, include) => current.Include(include));
+        if(predicate != null) query = query.Where(predicate);
+        if (orderBy != null) orderBy(query);
+
+        var items = query
+            .Skip(pagedRequest.PageSize * (pagedRequest.PageNumber - 1))
+            .Take(pagedRequest.PageSize)
+            .ToListAsync();
+        
+        return new PagedResponse<T>(
+                Items : items.Result,
+                TotalCount : totalDocuments,
+                PageNumber : pagedRequest.PageNumber,
+                PageSize : pagedRequest.PageSize,
+                TotalPages : totalPages
+            );
+    }
+
     public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
     {
         var filter = _filterBuilder.Where(predicate);
         return await ProductDbCollection.Find(filter).FirstOrDefaultAsync();
     }
 
-    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string? includeString = null,
+    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null, 
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string? includeString = null,
         bool disableTracking = true)
     {
-        IQueryable<T> query = ProductDbCollection.AsQueryable();
+        var query = ProductDbCollection.AsQueryable();
         if (disableTracking) query = query.AsNoTracking();
         if(!string.IsNullOrEmpty(includeString)) query = query.Include(includeString);
         if(predicate != null) query = query.Where(predicate);
@@ -35,9 +65,10 @@ public class BaseRepository<T>(ProductDbContext productDbContext, string collect
         return await query.ToListAsync();
     }
 
-    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, List<Expression<Func<T, object>>>? includes = null, bool disableTracking = true)
+    public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null, 
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, List<Expression<Func<T, object>>>? includes = null, bool disableTracking = true)
     {
-        IQueryable<T> query = ProductDbCollection.AsQueryable();
+        var query = ProductDbCollection.AsQueryable();
         if(disableTracking) query = query.AsNoTracking();
         if(includes != null) query = includes.Aggregate(query, (current, include) => 
             current.Include(include));

@@ -4,7 +4,7 @@ namespace ProductService.Domain.Models;
 
 [NoArgsConstructor]
 [AllArgsConstructor]
-public partial class Product : BaseEntity
+public partial class Product : Common.BaseEntity
 {
     public string Name { get; init; }
     public string Description { get; init; }

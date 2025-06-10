@@ -8,13 +8,13 @@ using ProductService.Contract.Persistence;
 namespace ProductService.Application.Features.Products.Queries.Handlers;
 
 public class GetAllProductsHandler(IProductRepository productRepository) 
-    : IRequestHandler<GetAllProduct, GenericResponse<IReadOnlyList<ProductResponse>>>
+    : IRequestHandler<GetAllProductQuery, GenericResponse<IReadOnlyList<ProductResponse>>>
 {
-    public Task<GenericResponse<IReadOnlyList<ProductResponse>>> Handle(GetAllProduct request, CancellationToken cancellationToken)
+    public Task<GenericResponse<IReadOnlyList<ProductResponse>>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
     {
-        var productList = productRepository.GetAllAsync();
+        var productsToReturn = productRepository.GetAllAsync();
         
-        return productList.ContinueWith(task => 
+        return productsToReturn.ContinueWith(task => 
             GenericResponse<IReadOnlyList<ProductResponse>>.Success(
                 task.Result.Select(product => ProductMapper.Mapper.Map<ProductResponse>(product)).ToList(), 
                 "Product.List.Found.Successfully"), cancellationToken);

@@ -1,11 +1,17 @@
 using System.Linq.Expressions;
-using BaseEntity = ProductService.Domain.Models.BaseEntity;
+using ProductService.Contract.Common;
+using BaseEntity = ProductService.Domain.Common.BaseEntity;
 
 namespace ProductService.Contract.Persistence;
 
 public interface IBaseRepository<T> where T : BaseEntity
 {
     Task<IReadOnlyList<T>> GetAllAsync();
+    Task<PagedResponse<T>> GetPagedAsync(PagedRequest pagedRequest,
+        Expression<Func<T, bool>>? predicate = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+        List<Expression<Func<T, object>>>? includes = null,
+        bool disableTracking = true);
     Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
     Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null,
         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, 

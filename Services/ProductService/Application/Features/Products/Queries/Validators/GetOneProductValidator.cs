@@ -5,7 +5,7 @@ using ProductService.Domain.Validators;
 
 namespace ProductService.Application.Features.Products.Queries.Validators;
 
-public class GetOneProductValidator : BaseValidator<GetOneProduct>
+public class GetOneProductValidator : BaseValidator<GetOneProductQuery>
 {
     public GetOneProductValidator(ProductValidationHelper validationHelper)
     {

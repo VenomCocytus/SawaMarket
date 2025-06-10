@@ -4,5 +4,6 @@ using ProductService.Contract.DTOs;
 
 namespace ProductService.Application.Features.Products.Queries.Requests;
 
-public record GetPaginatedProducts(ProductPagedRequest ProductPagedRequest) 
-    : IRequest<GenericResponse<PagedResponse<ProductResponse>>>;
+public record GetOneProductQuery(
+    string? Id, 
+    string? Name) : IRequest<GenericResponse<ProductResponse>>;

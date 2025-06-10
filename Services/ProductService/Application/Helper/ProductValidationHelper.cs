@@ -17,7 +17,7 @@ public abstract class ProductValidationHelper(IProductRepository productReposito
     public async Task<bool> BeExistingProductName(string name, CancellationToken cancellationToken) =>
         await productRepository.ExistsByName(name);
     
-    public static bool HaveAtLeastOneIdentifier(GetOneProduct request) => 
+    public static bool HaveAtLeastOneIdentifier(GetOneProductQuery request) => 
         !string.IsNullOrEmpty(request.Name) || !string.IsNullOrEmpty(request.Id);
     
     public bool BeAValidUrl(string url) => 

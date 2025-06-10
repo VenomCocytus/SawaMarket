@@ -4,6 +4,4 @@ using ProductService.Contract.DTOs;
 
 namespace ProductService.Application.Features.Products.Queries.Requests;
 
-public record GetOneProduct(
-    string? Id, 
-    string? Name) : IRequest<GenericResponse<ProductResponse>>;
+public record GetAllProductQuery() : IRequest<GenericResponse<IReadOnlyList<ProductResponse>>>;

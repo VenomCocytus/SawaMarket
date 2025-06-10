@@ -8,9 +8,9 @@ using ProductService.Contract.Persistence;
 namespace ProductService.Application.Features.Products.Queries.Handlers;
 
 public class GetOneProductHandler(IProductRepository productRepository) 
-    : IRequestHandler<GetOneProduct, GenericResponse<ProductResponse>>
+    : IRequestHandler<GetOneProductQuery, GenericResponse<ProductResponse>>
 {
-    public async Task<GenericResponse<ProductResponse>> Handle(GetOneProduct request, CancellationToken cancellationToken)
+    public async Task<GenericResponse<ProductResponse>> Handle(GetOneProductQuery request, CancellationToken cancellationToken)
     {
         var productToReturn = !string.IsNullOrEmpty(request.Name) 
             ? await productRepository.GetByNameAsync(request.Name)
